@@ -1,7 +1,5 @@
 import React from 'react';
 
-const AboutPage = () => (
-  <div className="mx-auto w-[90vw] lg:w-[70vw] flex flex-col gap-5 text-lg">About</div>
-);
+const AboutPage = () => <div className="h-full flex iems-center justify-center">About</div>;
 
 export default AboutPage;

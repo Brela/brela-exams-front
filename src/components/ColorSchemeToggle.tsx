@@ -13,7 +13,7 @@ export function ColorSchemeToggle() {
       <Button
         variant="subtle"
         onClick={toggleColorScheme}
-        className={lightMode ? 'text-gray-700' : 'text-white'}
+        className={lightMode ? 'text-zinc-600' : 'text-zinc-300'}
       >
         <IconBrightnessHalf size={24} />
       </Button>

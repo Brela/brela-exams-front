@@ -17,7 +17,7 @@ const theme = createTheme({});
 const MantineProvider = ({ children }: { children: React.ReactNode }) => {
   const [brand] = useLocalStorage({
     key: 'brand',
-    defaultValue: '#287CFF',
+    defaultValue: '#A8FD9A',
   });
 
   const isValidColor = CSS.supports('color', brand);
@@ -29,7 +29,7 @@ const MantineProvider = ({ children }: { children: React.ReactNode }) => {
         ...theme,
         colors: {
           ...theme.colors,
-          brand: isValidColor ? generateColors(brand) : generateColors('#287CFF'),
+          brand: isValidColor ? generateColors(brand) : generateColors('#A8FD9A'),
         },
         primaryColor: 'brand',
         components: {

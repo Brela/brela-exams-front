@@ -12,7 +12,7 @@ const PageLoading = ({ className, style }: { className?: string; style?: Mantine
     }
     className={twMerge('flex items-center justify-center', className)}
   >
-    <Loader size={50} />
+    <Loader size={50} c="gray" />
   </Box>
 );
 
