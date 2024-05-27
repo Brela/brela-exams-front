@@ -1,8 +1,7 @@
 'use client';
 
-import { twMerge } from 'tailwind-merge';
-import SectionMain from './_homeComponents/wrappers/SectionMain';
-import getColorMode from '../utils/getColorMode';
+import { TextInput } from '@mantine/core';
+import getColorMode from '../../utils/getColorMode';
 
 const Hub = () => {
   const { lightMode, darkMode } = getColorMode();
@@ -10,9 +9,9 @@ const Hub = () => {
 
   return (
     <>
-      <SectionMain>
-        <div>heloo</div>
-      </SectionMain>
+      <div className="flex justify-center items-center w-[100vw] h-[70vh]">
+        <TextInput />
+      </div>
     </>
   );
 };

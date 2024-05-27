@@ -17,7 +17,7 @@
     "incremental": true,
     "noUnusedLocals": false,
     "paths": {
-      "@/*": ["./src*"]
+      "@/*": ["./src/*"]
     },
     "plugins": [{ "name": "next" }]
   },

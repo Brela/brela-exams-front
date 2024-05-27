@@ -1,11 +1,11 @@
 import { ColorSchemeScript } from '@mantine/core';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import QueryProvider from './Providers/React-Query';
-// import '../styles/globals.css';
-import MainShell from './AppShell';
+import QueryProvider from '@/providers/React-Query';
+import '@/styles/globals.css';
+import Layout from '@/providers/Layout';
 
-const MantineProvider = dynamic(() => import('./Providers/Mantine').then((ctx) => ctx.default), {
+const MantineProvider = dynamic(() => import('@/providers/Mantine').then((ctx) => ctx.default), {
   ssr: false,
 });
 
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <QueryProvider>
           <MantineProvider>
-            <MainShell>{children}</MainShell>
+            <Layout>{children}</Layout>
           </MantineProvider>
         </QueryProvider>
       </body>

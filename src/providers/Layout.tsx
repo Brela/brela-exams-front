@@ -1,21 +1,20 @@
 'use client';
 
 import '@mantine/core/styles.css';
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { AppShell, Burger, Group, useMantineColorScheme } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import Link from 'next/link'; // Import Link from Next.js
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
-import { IconBrightnessHalf } from '@tabler/icons-react';
-import classes from './page.module.css';
+import getColorMode from '@/utils/getColorMode';
+import classes from '../styles/nav.module.css';
 import useWindowSize from '../hooks/use-window-size';
 import { ColorSchemeToggle } from '../components/ColorSchemeToggle';
-import getColorMode from '../utils/getColorMode';
 
-function MainShell({ children }: { children: ReactNode }) {
+function Layout({ children }: { children: ReactNode }) {
   const { lightMode, darkMode } = getColorMode();
+  const { setColorScheme, colorScheme } = useMantineColorScheme();
 
   const pathname = usePathname();
   const [opened, { toggle }] = useDisclosure();
@@ -30,6 +29,19 @@ function MainShell({ children }: { children: ReactNode }) {
     // { href: '/blog', label: 'Blog' },
   ];
 
+  // this useEffect allows us to use "dark:" tailwind prefix and is based on app colorScheme
+  useEffect(() => {
+    if (colorScheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [colorScheme]);
+
+  const Logo = () => (
+    <div className="text-zinc-500 dark:text-green-500/70 text-xl font-semibold ">Brela Exams</div>
+  );
+
   return (
     <AppShell
       header={{ height: 60 }}
@@ -39,9 +51,7 @@ function MainShell({ children }: { children: ReactNode }) {
       <AppShell.Header>
         <Group h="100%" px="md" justify={isMobile ? 'space-between' : ''}>
           {isDesktop && (
-            <div className="text-zinc-500 dark:text-green-500 text-lg font-semibold ">
-              Brela Exams
-            </div>
+            <Logo />
             /*          <Image
               src={lightMode ? '/ldd-logo-black.png' : '/ldd-logo-white.png'}
               priority
@@ -52,8 +62,8 @@ function MainShell({ children }: { children: ReactNode }) {
           )}
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           {isMobile && (
-            // This ensures the image is on the right in mobile view
-            <Group>
+            <Logo />
+            /*      <Group>
               <Image
                 src={darkMode ? '/ldd-logo-white.png' : '/ldd-logo-black.png'}
                 priority
@@ -61,7 +71,7 @@ function MainShell({ children }: { children: ReactNode }) {
                 height={50}
                 alt="Picture of the author"
               />
-            </Group>
+            </Group> */
           )}
           {isDesktop && (
             // Other elements for desktop or additional conditional content
@@ -87,7 +97,7 @@ function MainShell({ children }: { children: ReactNode }) {
                       // className={`${classes.control} ${item.href === active ? `${darkMode ? 'text-[#90ee90] ' : 'text-[#5fcf5f] '} font-bold` : ''}`}
                       className={twMerge(
                         classes.control,
-                        item.href === active ? 'text-orange-500 font-bold' : ''
+                        item.href === active ? 'text-green-500 font-bold' : ''
                       )}
                     >
                       {item.label}
@@ -132,4 +142,4 @@ function MainShell({ children }: { children: ReactNode }) {
   );
 }
 
-export default MainShell;
+export default Layout;

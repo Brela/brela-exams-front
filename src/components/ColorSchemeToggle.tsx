@@ -10,7 +10,11 @@ export function ColorSchemeToggle() {
 
   return (
     <div>
-      <Button onClick={toggleColorScheme} className={lightMode ? 'text-gray-700' : 'text-white'}>
+      <Button
+        variant="subtle"
+        onClick={toggleColorScheme}
+        className={lightMode ? 'text-gray-700' : 'text-white'}
+      >
         <IconBrightnessHalf size={24} />
       </Button>
     </div>
