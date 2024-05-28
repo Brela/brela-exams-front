@@ -4,6 +4,7 @@ import { Box, Button, TextInput } from '@mantine/core';
 import { useState } from 'react';
 import { MoonLoader } from 'react-spinners';
 import { IconPackageExport, IconPlane } from '@tabler/icons-react';
+import { toast } from 'react-toastify';
 import { sendPrompt } from '@/api/openAi';
 
 const Hub = () => {
@@ -21,6 +22,7 @@ const Hub = () => {
       setResponse(res.result);
     } catch (error: any) {
       console.log(error);
+      toast(error.message);
     }
 
     setIsLoading(false);
