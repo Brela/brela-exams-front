@@ -24,7 +24,7 @@ function Layout({ children }: { children: ReactNode }) {
 
   const navItems = [
     { href: '/', label: 'Hub' },
-    { href: '/about', label: 'About' },
+    { href: '/testing', label: 'Testing' },
     // { href: '/pastEvents', label: 'Past Events' },
     // { href: '/blog', label: 'Blog' },
   ];
