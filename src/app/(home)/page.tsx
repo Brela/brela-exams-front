@@ -6,22 +6,27 @@ import { MoonLoader } from 'react-spinners';
 import { IconPackageExport, IconPlane } from '@tabler/icons-react';
 import { toast } from 'react-toastify';
 import { sendPrompt } from '@/api/openAi';
+import OpenAiResSection from './_homeComponents/OpenAiResSection';
+import { Question } from '@/types';
+import getColorMode from '@/utils/getColorMode';
 
 const Hub = () => {
+  const { darkMode, lightMode } = getColorMode();
   // const isMobile = typeof windowSize?.width === 'number' && windowSize?.width < 768;
   const [value, setValue] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [response, setResponse] = useState<Question[]>();
 
-  async function handleGptPrompt(e: React.FormEvent) {
+  async function handleOpenaiPrompt(e: React.FormEvent) {
     e.preventDefault();
     setIsLoading(true);
 
     try {
       const res = await sendPrompt(value);
-      setResponse(res.result);
+      console.log('Formatted questions:', res.questions);
+      setResponse(res.questions);
     } catch (error: any) {
-      console.log(error);
+      console.log('Error in handleOpenaiPrompt:', error);
       toast(error.message);
     }
 
@@ -31,8 +36,8 @@ const Hub = () => {
   return (
     <>
       <Box className="flex flex-col justify-center items-center w-[100vw]">
-        <div className="flex items-end justify-center pb-10  h-[30vh]">
-          <form onSubmit={handleGptPrompt}>
+        <div className="flex items-end justify-center pb-10  h-[15vh]">
+          <form onSubmit={handleOpenaiPrompt}>
             <div className="flex items-center gap-3 relative">
               <TextInput w={300} value={value} onChange={(e) => setValue(e.target.value)} />
               <Button type="submit" variant="light" className="absolute -right-14 p-1 px-2">
@@ -45,10 +50,10 @@ const Hub = () => {
         <Box className="flex justify-center">
           {isLoading ? (
             <div>
-              <MoonLoader color="#000" loading={isLoading} size={30} />
+              <MoonLoader color={lightMode ? '#000' : 'white'} loading={isLoading} size={40} />
             </div>
           ) : (
-            <p>response: {response}</p>
+            <OpenAiResSection questions={response} />
           )}
         </Box>
       </Box>

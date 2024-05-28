@@ -1,26 +1,48 @@
+import safeStringify from 'json-stringify-safe';
 import { api_url } from './_config';
 
 export async function sendPrompt(userPrompt: string) {
   console.log(api_url);
   const response = await fetch(`${api_url}/openai/prompt/`, {
     method: 'POST',
-    // credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
+    body: safeStringify({
       userPrompt,
     }),
   });
 
-  console.log(response);
   if (!response.ok) {
     const data = await response.json();
-    // console.log(data.error.message);
     throw new Error(data.error.message);
   }
 
   const responseData = await response.json();
-  console.log('done', responseData);
-  return responseData;
+  console.log('Raw response data:', responseData);
+
+  try {
+    // Step-by-step sanitization and logging
+    let sanitizedResult = responseData.result;
+    console.log('Original result:', sanitizedResult);
+
+    // Remove newline characters
+    sanitizedResult = sanitizedResult.replace(/\\n/g, '');
+    console.log('After removing newlines:', sanitizedResult);
+
+    // Ensure JSON is properly closed
+    const parsedResult = JSON.parse(sanitizedResult);
+    console.log('Parsed result:', parsedResult);
+
+    // Remove incomplete questions
+    parsedResult.questions = parsedResult.questions.filter(
+      (question: any) => question.question && question.options && question.answer !== undefined
+    );
+    console.log('Filtered result:', parsedResult);
+
+    return parsedResult;
+  } catch (error) {
+    console.error('Error in parsing or filtering:', error);
+    throw new Error('Failed to parse or filter response JSON');
+  }
 }
