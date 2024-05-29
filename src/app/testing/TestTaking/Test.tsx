@@ -1,64 +1,58 @@
-import { useEffect, useState } from "react";
-import { getLetterOption } from "./utils";
-import { Stats } from "../Home";
+import { useEffect, useState } from 'react';
+import { Button } from '@mantine/core';
+import { getLetterOption } from './utils';
+import { Stats } from '../Home';
 
 const test1 = [
   {
-    question:
-      "What rare mineral in Minecraft is used primarily for crafting tools and armor?",
-    options: ["Iron", "Gold", "Diamond", "Coal"],
+    question: 'What rare mineral in Minecraft is used primarily for crafting tools and armor?',
+    options: ['Iron', 'Gold', 'Diamond', 'Coal'],
     answerIndex: 2,
   },
   {
     question:
-      "Which creature in the game can explode, potentially causing great damage to players and structures?",
-    options: ["Zombie", "Creeper", "Enderman", "Skeleton"],
+      'Which creature in the game can explode, potentially causing great damage to players and structures?',
+    options: ['Zombie', 'Creeper', 'Enderman', 'Skeleton'],
     answerIndex: 1,
   },
   {
-    question:
-      "What fictional dimension can players access via a portal in Minecraft?",
-    options: ["The Overworld", "The End", "The Nether", "Skylands"],
+    question: 'What fictional dimension can players access via a portal in Minecraft?',
+    options: ['The Overworld', 'The End', 'The Nether', 'Skylands'],
     answerIndex: 2,
   },
   {
-    question: "Which tool is required to mine diamonds?",
-    options: [
-      "Wooden Pickaxe",
-      "Stone Pickaxe",
-      "Iron Pickaxe",
-      "Gold Pickaxe",
-    ],
+    question: 'Which tool is required to mine diamonds?',
+    options: ['Wooden Pickaxe', 'Stone Pickaxe', 'Iron Pickaxe', 'Gold Pickaxe'],
     answerIndex: 2,
   },
   {
-    question: "What do players need to make to sleep through the night?",
-    options: ["Table", "Chair", "Bed", "Tent"],
+    question: 'What do players need to make to sleep through the night?',
+    options: ['Table', 'Chair', 'Bed', 'Tent'],
     answerIndex: 2,
   },
   {
-    question: "What can you use to safely harvest beehives and bee nests?",
-    options: ["Shears", "Sword", "Campfire", "Axe"],
+    question: 'What can you use to safely harvest beehives and bee nests?',
+    options: ['Shears', 'Sword', 'Campfire', 'Axe'],
     answerIndex: 2,
   },
   {
-    question: "Which item is used to cure a zombie villager?",
-    options: ["Golden Carrot", "Potion of Weakness", "Golden Apple", "Milk"],
+    question: 'Which item is used to cure a zombie villager?',
+    options: ['Golden Carrot', 'Potion of Weakness', 'Golden Apple', 'Milk'],
     answerIndex: 1,
   },
   {
-    question: "What animal in Minecraft provides wool?",
-    options: ["Cow", "Chicken", "Sheep", "Pig"],
+    question: 'What animal in Minecraft provides wool?',
+    options: ['Cow', 'Chicken', 'Sheep', 'Pig'],
     answerIndex: 2,
   },
   {
-    question: "Which enchantment increases mining speed?",
-    options: ["Efficiency", "Fortune", "Unbreaking", "Sharpness"],
+    question: 'Which enchantment increases mining speed?',
+    options: ['Efficiency', 'Fortune', 'Unbreaking', 'Sharpness'],
     answerIndex: 0,
   },
   {
-    question: "Which plant-based food source can be used to breed chickens?",
-    options: ["Wheat", "Carrots", "Seeds", "Potatoes"],
+    question: 'Which plant-based food source can be used to breed chickens?',
+    options: ['Wheat', 'Carrots', 'Seeds', 'Potatoes'],
     answerIndex: 2,
   },
 ];
@@ -89,14 +83,11 @@ const Test = ({ closeTest }: { closeTest: (stats: Stats) => void }) => {
           <h4>{currentQuest.question}</h4>
           <div className="answer-options">
             {currentQuest.options.map((option, index) => (
-              <div
+              <Button
+                variant="subtle"
                 key={index}
                 className={`answer-option ${
-                  selectedAnswer === option
-                    ? isCorrect
-                      ? "correct"
-                      : "wrong"
-                    : ""
+                  selectedAnswer === option ? (isCorrect ? 'correct' : 'wrong') : ''
                 }`}
                 onClick={() => {
                   // if its correct already, don't allow a select
@@ -107,7 +98,7 @@ const Test = ({ closeTest }: { closeTest: (stats: Stats) => void }) => {
               >
                 <div>{`${getLetterOption(index)})`}</div>
                 <div>{option}</div>
-              </div>
+              </Button>
             ))}
           </div>
         </div>
@@ -119,7 +110,7 @@ const Test = ({ closeTest }: { closeTest: (stats: Stats) => void }) => {
 
         <section className="prev-next-buttons-section">
           <button
-            className={currentQuestIdx === 0 ? "prev-button-hidden" : ""}
+            className={currentQuestIdx === 0 ? 'prev-button-hidden' : ''}
             onClick={() => {
               setSelectedAnswer(null);
               setIsCorrect(false);
@@ -133,7 +124,7 @@ const Test = ({ closeTest }: { closeTest: (stats: Stats) => void }) => {
               onClick={() => {
                 setSelectedAnswer(null);
                 setIsCorrect(false);
-                closeTest({ score: score, numOfQuestions: test1.length });
+                closeTest({ score, numOfQuestions: test1.length });
               }}
             >
               Finish Test

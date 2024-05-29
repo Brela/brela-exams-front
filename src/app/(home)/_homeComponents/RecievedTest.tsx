@@ -6,9 +6,11 @@ import { Question } from '@/types';
 const RecievedTest = ({
   questions,
   isLoading,
+  revealSolutions,
 }: {
   questions: Question[] | undefined;
   isLoading: boolean;
+  revealSolutions: boolean;
 }) => {
   const [activeQuestionIndex, setActiveQuestionIndex] = useState<number | null>(null);
 
@@ -25,6 +27,8 @@ const RecievedTest = ({
 
   const numOfRows = 10; // Define the number of rows
   // const isLoading = true;
+
+  console.log(questions);
   return (
     <>
       <div className="questions gap-4 grid grid-cols-1 lg:grid-cols-2 items-stretch">
@@ -41,20 +45,27 @@ const RecievedTest = ({
                   {q.options.map((option, i) => (
                     <li
                       key={i}
-                      className={`${q.answerArrPosition === i ? 'font-bold text-green-600' : ''}`}
+                      className={`${revealSolutions && q.answerArrPosition === i ? 'font-bold text-green-600' : ''}`}
                     >
                       {option}
                     </li>
                   ))}
                 </ul>
-                {/* {activeQuestionIndex === index && <div className="pt-4">{q.answer}</div>}
-              <Button
+                {/*     <Button
                 variant="subtle"
-                c="gray"
-                onClick={() => setActiveQuestionIndex(index)}
-                className="mt-4"
+                key={index}
+                className={`answer-option ${
+                  selectedAnswer === option ? (isCorrect ? 'correct' : 'wrong') : ''
+                }`}
+                onClick={() => {
+                  // if its correct already, don't allow a select
+                  if (!isCorrect) {
+                    handleOptionClick(option);
+                  }
+                }}
               >
-                {activeQuestionIndex === index ? 'Hide Answer' : 'Show Answer'}
+                <div>{`${getLetterOption(index)})`}</div>
+                <div>{option}</div>
               </Button> */}
               </CardWrapper>
             ))}
