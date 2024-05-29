@@ -43,16 +43,20 @@ const Hub = () => {
   }
   console.log(response);
 
-  // const showControls = response && response?.length > 0
-  const showControls = true;
+  const responseIsIn = response && response?.length > 0;
+
   return (
     <>
       <section className=" flex flex-col-reverse lg:flex-row ">
-        <RecommendedPrompts setValue={setValue} handlePrompt={handlePrompt} />
         <Box className="flex flex-col justify-center items-center w-[100vw]">
           <div className="flex items-end justify-center pb-10 w-full h-[15vh]">
             <form onSubmit={(e) => handlePrompt(value, e)}>
-              <div className="flex items-center w-full gap-3 relative">
+              <div className="flex items-center w-full gap-3 ">
+                <RecommendedPrompts
+                  response={response}
+                  setValue={setValue}
+                  handlePrompt={handlePrompt}
+                />
                 <TextInput
                   w={400}
                   leftSection={<IconSearch size={18} />}
@@ -62,7 +66,7 @@ const Hub = () => {
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                 />
-                {showControls && (
+                {responseIsIn && (
                   <Group className=" p-1 px-2 min-w-[200px] rounded-md">
                     <Tooltip label="Download PDF" position="top" c="white" bg="gray">
                       <ActionIcon variant="light" className="border-zinc-200">

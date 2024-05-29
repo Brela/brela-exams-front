@@ -42,15 +42,18 @@ function Layout({ children }: { children: ReactNode }) {
     <div className="text-zinc-500 dark:text-green-500/70 text-xl font-semibold ">Brela Exams</div>
   );
 
+  const headerHeight = 60;
+
   return (
     <AppShell
-      header={{ height: 60 }}
+      header={{ height: headerHeight }}
       navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened } }}
       padding="md"
       mb={100}
+      mt={60}
     >
       <AppShell.Header>
-        <Group h="100%" px="md" justify={isMobile ? 'space-between' : ''}>
+        <Group h="100%" p="sm" px="md" justify={isMobile ? 'space-between' : ''}>
           {isDesktop && (
             <Logo />
             /*          <Image
@@ -138,7 +141,11 @@ function Layout({ children }: { children: ReactNode }) {
         ))}
       </AppShell.Navbar>
 
-      <AppShell.Main>{children}</AppShell.Main>
+      {/* // custom scrollbar that starts below header */}
+      <div style={{ overflowY: 'auto', height: `calc(100vh - ${headerHeight}px)` }}>
+        {/* <div style={{ height: `calc(100vh - ${headerHeight}px)` }}> */}
+        <AppShell.Main>{children}</AppShell.Main>
+      </div>
     </AppShell>
   );
 }

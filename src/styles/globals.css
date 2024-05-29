@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/*  remove apps scrollbar so we can set custom on e in layout below header */
+body,
+html {
+  overflow: hidden;
+}
+
 .custom-underline {
   text-decoration: underline;
   text-underline-offset: 0.1em; /* Adjust the distance */

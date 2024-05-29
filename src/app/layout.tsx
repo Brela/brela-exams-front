@@ -19,10 +19,10 @@ export const metadata: { title: string; description: string } = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <Head>
-        <link rel="icon" href="/favicon.png" />
+      <head>
+        <link rel="icon" href="/src/assets/favicon.ico" />
         <ColorSchemeScript />
-      </Head>
+      </head>
       <body>
         <QueryProvider>
           <MantineProvider>
