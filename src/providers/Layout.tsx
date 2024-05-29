@@ -47,6 +47,7 @@ function Layout({ children }: { children: ReactNode }) {
       header={{ height: 60 }}
       navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened } }}
       padding="md"
+      mb={100}
     >
       <AppShell.Header>
         <Group h="100%" px="md" justify={isMobile ? 'space-between' : ''}>

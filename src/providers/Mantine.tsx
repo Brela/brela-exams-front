@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  Button,
   createTheme,
   Indicator,
   MultiSelect,
@@ -17,9 +18,8 @@ const theme = createTheme({});
 const MantineProvider = ({ children }: { children: React.ReactNode }) => {
   const [brand] = useLocalStorage({
     key: 'brand',
-    defaultValue: '#A8FD9A',
+    defaultValue: '#32CD32',
   });
-
   const isValidColor = CSS.supports('color', brand);
 
   return (
@@ -29,11 +29,17 @@ const MantineProvider = ({ children }: { children: React.ReactNode }) => {
         ...theme,
         colors: {
           ...theme.colors,
-          brand: isValidColor ? generateColors(brand) : generateColors('#A8FD9A'),
+          brand: isValidColor ? generateColors(brand) : generateColors('#32CD32'),
         },
         primaryColor: 'brand',
         components: {
           ...theme.components,
+
+          Button: Button.extend({
+            defaultProps: {
+              color: 'brand',
+            },
+          }),
           Modal: {
             styles: {
               title: {
