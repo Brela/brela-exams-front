@@ -39,7 +39,7 @@ function Layout({ children }: { children: ReactNode }) {
   }, [colorScheme]);
 
   const Logo = () => (
-    <div className="text-zinc-500 dark:text-green-500/70 text-xl font-semibold ">Brela Exams</div>
+    <div className="text-zinc-500 dark:text-zinc-300 text-xl font-semibold ">Brela Exams</div>
   );
 
   const headerHeight = 60;
@@ -48,7 +48,6 @@ function Layout({ children }: { children: ReactNode }) {
     <AppShell
       header={{ height: headerHeight }}
       navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened } }}
-      padding="md"
       mb={100}
       mt={60}
     >

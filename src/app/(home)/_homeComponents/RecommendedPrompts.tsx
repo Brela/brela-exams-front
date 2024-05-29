@@ -1,14 +1,6 @@
 import React from 'react';
 import { Menu, Button, Text, rem, ActionIcon } from '@mantine/core';
-import {
-  IconSettings,
-  IconSearch,
-  IconPhoto,
-  IconMessageCircle,
-  IconTrash,
-  IconArrowsLeftRight,
-  IconSparkles,
-} from '@tabler/icons-react';
+import { IconSparkles } from '@tabler/icons-react';
 import { Question } from '@/types';
 import getColorMode from '@/utils/getColorMode';
 
@@ -33,11 +25,11 @@ const RecommendedPrompts = ({
   ];
 
   const adjustmentPrompts = [
-    'Make these questions easier',
-    'Make these questions harder',
+    'Make easier',
+    'Make harder',
     'Use a Middle English tone',
-    'Add a pirate twist to these questions',
-    'Phrase these questions in a superhero style',
+    'Use a Pirate tone',
+    'Phrase in a superhero style',
   ];
 
   const responseIsIn = response && response?.length > 0;
@@ -45,7 +37,7 @@ const RecommendedPrompts = ({
   return (
     <Menu shadow="md">
       <Menu.Target>
-        <ActionIcon variant="light">
+        <ActionIcon variant="subtle" c={responseIsIn ? 'pink' : ''}>
           <IconSparkles />
         </ActionIcon>
       </Menu.Target>
@@ -59,10 +51,10 @@ const RecommendedPrompts = ({
                 disabled={!responseIsIn}
                 key={index}
                 onClick={() => {
-                  setValue(prompt);
+                  setValue(`Adjust the previous question set to: ${prompt}`);
                   handlePrompt(prompt);
                 }}
-                className="text-cyan-700 dark:text-cyan-500 bg-zinc-100/50 dark:bg-zinc-800 mb-3"
+                className="text-pink-500 bg-zinc-100/50 dark:bg-zinc-800 mb-3"
               >
                 {prompt}
               </Menu.Item>
@@ -78,7 +70,7 @@ const RecommendedPrompts = ({
               setValue(prompt);
               handlePrompt(prompt);
             }}
-            className="text-pink-500 bg-zinc-100/50 dark:bg-zinc-800 mb-3"
+            className="text-cyan-700 dark:text-cyan-500 bg-zinc-100/50 dark:bg-zinc-800 mb-3"
           >
             {prompt}
           </Menu.Item>

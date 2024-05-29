@@ -20,8 +20,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/src/assets/favicon.ico" />
         <ColorSchemeScript />
+        <link rel="icon" href="/4.png" />
       </head>
       <body>
         <QueryProvider>

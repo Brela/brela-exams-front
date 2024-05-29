@@ -1,10 +1,20 @@
 'use client';
 
-import { ActionIcon, Box, Button, Divider, Group, TextInput, Tooltip } from '@mantine/core';
+import {
+  ActionIcon,
+  Box,
+  Button,
+  Divider,
+  Group,
+  Skeleton,
+  TextInput,
+  Tooltip,
+} from '@mantine/core';
 import { useState } from 'react';
 import { MoonLoader } from 'react-spinners';
 import {
   IconDownload,
+  IconEye,
   IconPackageExport,
   IconPlane,
   IconSearch,
@@ -16,7 +26,7 @@ import { sendPrompt } from '@/api/openAi';
 import RecievedTest from './_homeComponents/RecievedTest';
 import { Question } from '@/types';
 import getColorMode from '@/utils/getColorMode';
-import RecommendedPrompts from './_homeComponents/RecommendedPrompts';
+import RecommendedPromptsMenu from './_homeComponents/RecommendedPrompts';
 import TabsGroup from './_homeComponents/Tabs';
 
 const Hub = () => {
@@ -45,56 +55,60 @@ const Hub = () => {
 
   const responseIsIn = response && response?.length > 0;
 
+  const PromptSection = () => (
+    <div className=" pb-10 w-full h-[10vh]">
+      <form onSubmit={(e) => handlePrompt(value, e)}>
+        <div className="flex justify-center items-center w-full gap-3 ">
+          <TextInput
+            w={400}
+            leftSection={<IconSearch size={18} />}
+            placeholder='Enter desired exam ( e.g. "Beginner Spanish" )'
+            size="md"
+            radius="lg"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            disabled={isLoading}
+            rightSection={
+              <RecommendedPromptsMenu
+                response={response}
+                setValue={setValue}
+                handlePrompt={handlePrompt}
+              />
+            }
+          />
+        </div>
+      </form>
+    </div>
+  );
+
   return (
     <>
-      <section className=" flex flex-col-reverse lg:flex-row ">
-        <Box className="flex flex-col justify-center items-center w-[100vw]">
-          <div className="flex items-end justify-center pb-10 w-full h-[15vh]">
-            <form onSubmit={(e) => handlePrompt(value, e)}>
-              <div className="flex items-center w-full gap-3 ">
-                <RecommendedPrompts
-                  response={response}
-                  setValue={setValue}
-                  handlePrompt={handlePrompt}
-                />
-                <TextInput
-                  w={400}
-                  leftSection={<IconSearch size={18} />}
-                  placeholder='Enter desired exam ( e.g. "Beginner Spanish" )'
-                  size="md"
-                  radius="lg"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
-                />
-                {responseIsIn && (
-                  <Group className=" p-1 px-2 min-w-[200px] rounded-md">
-                    <Tooltip label="Download PDF" position="top" c="white" bg="gray">
-                      <ActionIcon variant="light" className="border-zinc-200">
-                        <IconDownload size={20} />
-                      </ActionIcon>
-                    </Tooltip>
-                  </Group>
-                )}
-                {/*  <Button type="submit" variant="light" className="absolute -right-14 p-1 px-2">
-                <IconSend2 />
-              </Button> */}
-              </div>
-            </form>
-          </div>
-          {/* <TabsGroup /> */}
-          {/* <Divider className="w-full" /> */}
-          <Box className="flex justify-center">
-            {isLoading ? (
-              <div>
-                {/* <div>Fetching Api...</div> */}
-                <MoonLoader color={lightMode ? '#000' : 'white'} loading={isLoading} size={40} />
-              </div>
-            ) : (
-              <RecievedTest questions={response} />
-            )}
-          </Box>
+      <Box className="flex flex-col items-center w-[100vw]  px-[15vw] sm:px-[10vw] lg:px-[15vw]">
+        <PromptSection />
+        {/* <TabsGroup /> */}
+        {/* <Divider className="w-full" /> */}
+        <Box className="flex flex-col items-end">
+          {/* // controls */}
+          {responseIsIn && (
+            <Group className=" p-1 px-2 rounded-md">
+              {/* download pdf */}
+              <Tooltip label="Download PDF" position="top" c="white" bg="gray">
+                <ActionIcon variant="subtle" c="gray">
+                  <IconDownload className="p-0" size={20} />
+                </ActionIcon>
+              </Tooltip>
+              <Divider orientation="vertical" />
+              {/*reveal solutions */}
+              <Tooltip label="Reveal Solutions" position="top" c="white" bg="gray">
+                <ActionIcon variant="subtle" c="gray">
+                  <IconEye className="p-0" size={20} />
+                </ActionIcon>
+              </Tooltip>
+            </Group>
+          )}
+          <RecievedTest questions={response} isLoading={isLoading} />
         </Box>
-      </section>
+      </Box>
     </>
   );
 };
