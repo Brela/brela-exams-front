@@ -1,0 +1,16 @@
+{
+  "functions": {
+    "api/test.js": {
+      "maxDuration": 30
+    },
+    "api/*.js": {
+      "maxDuration": 15
+    },
+    "src/api/openai.ts": {
+      "maxDuration": 25
+    },
+    "src/api/*.ts": {
+      "maxDuration": 20
+    }
+  }
+}
