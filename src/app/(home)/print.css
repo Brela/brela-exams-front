@@ -1,0 +1,70 @@
+/* print.css */
+@media print {
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0.5in;
+    width: 100%;
+    /* overflow: visible !important; */
+  }
+
+  .question {
+    margin-bottom: 1em;
+    page-break-inside: avoid;
+  }
+
+  .options {
+    margin-left: 1em;
+  }
+
+  .question,
+  .options {
+    font-size: 12pt;
+  }
+
+  .no-print,
+  .mantine-Modal-close,
+  .mantine-Modal-title {
+    display: none;
+  }
+
+  /* Remove scroll bars */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Remove shadows */
+  * {
+    box-shadow: none !important;
+  }
+
+  /* Ensure the content is not cut off */
+  @page {
+    margin: 1in;
+  }
+
+  body {
+    break-inside: avoid;
+  }
+
+  /* Ensure the content is not cut off */
+  @page {
+    margin: 1in;
+  }
+
+  body {
+    break-inside: avoid;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+
+  .answers {
+    font-size: 14pt;
+    margin-top: 2em;
+  }
+
+  .answer {
+    margin-bottom: 1em;
+  }
+}
