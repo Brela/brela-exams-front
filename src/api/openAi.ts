@@ -1,4 +1,4 @@
-'use client';
+'use server';
 
 import safeStringify from 'json-stringify-safe';
 import { api_url } from './_config';
