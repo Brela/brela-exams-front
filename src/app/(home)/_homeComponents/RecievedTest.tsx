@@ -28,7 +28,6 @@ const RecievedTest = ({
   const numOfRows = 10; // Define the number of rows
   // const isLoading = true;
 
-  console.log(questions);
   return (
     <>
       <div className="questions gap-4 grid grid-cols-1 lg:grid-cols-2 items-stretch">

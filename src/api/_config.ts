@@ -1,3 +1,3 @@
-export const api_url = process.env.API_URL || 'https://brela-exams-back-production.up.railway.app/';
+export const api_url = 'http://localhost:5050';
 
 console.log('API URL:', api_url);

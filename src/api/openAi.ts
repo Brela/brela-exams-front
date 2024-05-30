@@ -1,10 +1,19 @@
-'use server';
+// 'use server';
 
 import safeStringify from 'json-stringify-safe';
 import { api_url } from './_config';
 
 export async function sendPrompt(userPrompt: string) {
-  const response = await fetch(`${api_url}/openai/prompt/`, {
+  // the import from env work locally but not hoted with vercel env for some reason
+  // const API_URL = api_url || 'https://brela-exams-back-production.up.railway.app/';
+
+  // testing hosted BE endpoint
+  const API_URL = 'https://brela-exams-back-production.up.railway.app/';
+
+  // const API_URL = 'http://localhost:5050';
+
+  console.log('API_URL:  ', API_URL);
+  const response = await fetch(`${API_URL}/openai/prompt/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -13,8 +22,6 @@ export async function sendPrompt(userPrompt: string) {
       userPrompt,
     }),
   });
-
-  // console.log(api_url);
 
   if (!response.ok) {
     const data = await response.json();

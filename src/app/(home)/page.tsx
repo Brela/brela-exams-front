@@ -28,7 +28,7 @@ const Hub = () => {
       console.log('Formatted questions:', res.questions);
       setResponse(res.questions);
     } catch (error: any) {
-      console.log('Error in handlePrompt:', error);
+      console.log('Error in handlePrompt:', error.message);
       toast(error.message);
     }
 
