@@ -1,13 +1,11 @@
-'use server';
+'use client';
 
 import safeStringify from 'json-stringify-safe';
 import { api_url } from './_config';
 
 export async function sendPrompt(userPrompt: string) {
-  const API_URL = api_url;
-
   // env not working with hosted app via - vercel variables - hardcoding for now
-  // const API_URL = api_url || 'https://brela-exams-back-production.up.railway.app';
+  const API_URL = api_url || 'https://brela-exams-back-production.up.railway.app';
 
   console.log('API_URL:  ', API_URL);
   const response = await fetch(`${API_URL}/openai/prompt/`, {
