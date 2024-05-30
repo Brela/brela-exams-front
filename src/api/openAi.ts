@@ -14,7 +14,7 @@ export async function sendPrompt(userPrompt: string) {
     }),
   });
 
-  console.log(api_url);
+  // console.log(api_url);
 
   if (!response.ok) {
     const data = await response.json();
