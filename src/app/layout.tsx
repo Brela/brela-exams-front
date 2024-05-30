@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 import QueryProvider from '@/providers/React-Query';
 import '@/styles/globals.css';
-import Layout from '@/providers/Layout';
+import Layout from '@/providers/Layout/Layout';
 import 'react-toastify/dist/ReactToastify.css';
 
 const MantineProvider = dynamic(() => import('@/providers/Mantine').then((ctx) => ctx.default), {
