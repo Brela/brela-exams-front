@@ -25,7 +25,7 @@ const Hub = () => {
 
     try {
       const res = await sendPrompt(currValue);
-      console.log('Formatted questions:', res.questions);
+      // console.log('Formatted questions:', res.questions);
       setResponse(res.questions);
     } catch (error: any) {
       console.log('Error in handlePrompt:', error.message);
