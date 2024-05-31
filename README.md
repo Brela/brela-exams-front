@@ -1,37 +1,34 @@
-# Mantine Next.js template
+# Brela Exams
 
-This is a template for [Next.js](https://nextjs.org/) app router + [Mantine](https://mantine.dev/).
-If you want to use pages router instead, see [next-pages-template](https://github.com/mantinedev/next-pages-template).
+- Enter a prompt for the exam you want - it can be anything!
+- Your prompt hits the OpenAI API and returns the exam.
+- You can view the answers by clicking the 👁 icon.
 
-## Features
+<section align="left">
+  <img src="/public/HomeLight05-31-2024.png" alt="Light mode Brela Exams home screen" width="620" height="400"/>
+</section>
 
-This template comes with the following features:
+<section align="left">
+  <img src="/public/HomeDark05-31-2024.png" alt="Dark mode Brela Exams home screen" width="620" height="400"/>
+</section>
+<br>
 
-- [PostCSS](https://postcss.org/) with [mantine-postcss-preset](https://mantine.dev/styles/postcss-preset)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Storybook](https://storybook.js.org/)
-- [Jest](https://jestjs.io/) setup with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
-- ESLint setup with [eslint-config-mantine](https://github.com/mantinedev/eslint-config-mantine)
+## Live Site
 
-## npm scripts
+[Brela Exams](https://brela-exams.vercel.app/)
 
-### Build and dev scripts
+## Planned Features
 
-- `dev` – start dev server
-- `build` – bundle application for production
-- `analyze` – analyzes application bundle with [@next/bundle-analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)
+- Users can take the exam once it is generated and receive grades.
+- Community Exams feature: Users can save exams to 'Community Exams'. Once approved by a moderator (a moderator dashboard needs to be created for approvals), the community can view and use these exams.
 
-### Testing scripts
+## Tech Used
 
-- `typecheck` – checks TypeScript types
-- `lint` – runs ESLint
-- `prettier:check` – checks files with Prettier
-- `jest` – runs jest tests
-- `jest:watch` – starts jest watch
-- `test` – runs `jest`, `prettier:check`, `lint` and `typecheck` scripts
+Next.js | React | TypeScript | MongoDB | Express | Node | OpenAI API
 
-### Other scripts
+- Frontend hosted on Vercel
+- Backend hosted on Railway
 
-- `storybook` – starts storybook dev server
-- `storybook:build` – build production storybook bundle to `storybook-static`
-- `prettier:write` – formats all files with Prettier
+### Backend Repository:
+
+[Brela Exams Backend](https://github.com/Brela/brela-exams-back)
