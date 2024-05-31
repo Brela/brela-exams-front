@@ -1,4 +1,5 @@
 # Brela Exams
+### create AI generated exams in an instant
 
 <div style="text-align: center;">
   <img src="/public/HomeLight05-31-2024.png" alt="Light mode Brela Exams home screen" width="620" height="400" style="margin-right: 20px;"/>
@@ -23,13 +24,13 @@
 
 ### Front End Tech:
 
-Next.js -- React -- TypeScript -- CSS -- Tailwind CSS
+Next.js  |  React  |  TypeScript  |  CSS  |  Tailwind CSS
 
 - hosted on Vercel
 
 ### Back End Tech:
 
-Node.js -- MongoDB -- Express -- OpenAI API
+Node.js  |  MongoDB  |  Express  |  OpenAI API
 
 - hosted on Railway
 
