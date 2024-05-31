@@ -1,5 +1,5 @@
-# Brela Exams
-### create AI generated exams in an instant
+<h1 align="center">Brela Exams</h1>
+<h3 align="center">create AI generated exams in an instant</h3>
 
 <section align="center">
   <img src="/public/HomeLight05-31-2024.png" alt="Light mode Brela Exams home screen" width="620" height="400" style="margin-right: 20px;"/>
