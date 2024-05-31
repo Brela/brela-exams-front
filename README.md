@@ -7,7 +7,7 @@
 </div>
 <br>
 
-
+<section align="left">
 ## Current Features
 
 ✓ Enter a prompt for the exam you want - it can be anything!
