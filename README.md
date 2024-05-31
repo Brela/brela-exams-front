@@ -7,9 +7,6 @@
 </div>
 <br>
 
-## Live Site
-
-<a href="https://brela-exams.vercel.app/" target="_blank" rel="noopener noreferrer">Brela Exams</a>
 
 ## Current Features
 
