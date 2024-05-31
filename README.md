@@ -18,8 +18,9 @@
 
 ## Planned Features
 
-☸ Users can take the exam once it is generated and receive grades.
-☸ Community Exams feature: Users can save exams to 'Community Exams'. Once approved by a moderator (a moderator dashboard needs to be created for approvals), the community can view and use these exams.
+✏ Users can take the exam once it is generated and receive grades.
+<br>
+✏ Community Exams feature: Users can save exams to 'Community Exams'. Once approved by a moderator (a moderator dashboard needs to be created for approvals), the community can view and use these exams.
 
 ### Front End Tech:
 
