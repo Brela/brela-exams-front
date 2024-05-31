@@ -23,7 +23,7 @@
 <br>
 ✏ Community Exams feature: Users can save exams to 'Community Exams'.
   <br>
-  Once approved by a moderator (a moderator dashboard needs to be created for approvals), the community can view and use these exams.
+✏ Moderator dashboard to approve community exams
 
 ### Front End Tech:
 
