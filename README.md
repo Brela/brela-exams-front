@@ -10,9 +10,11 @@
 
 ## Current Features
 
-* Enter a prompt for the exam you want - it can be anything!
-- Your prompt hits the OpenAI API and returns the exam.
-- You can view the answers by clicking the 👁 icon.
+✓ Enter a prompt for the exam you want - it can be anything!
+<br>
+✓ Your prompt hits the OpenAI API and returns the exam.
+<br>
+✓ You can view the answers by clicking the 👁 icon.
 
 ## Planned Features
 
