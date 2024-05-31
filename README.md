@@ -21,7 +21,7 @@
 
 ### Front End Tech:
 
-Next.js  |  React  |  TypeScript  |  CSS  |  Tailwind CSS
+Next.js  |  React  |  TypeScript  |  CSS  |  Tailwind CSS  |  Mantine Components
 
 - hosted on Vercel
 
