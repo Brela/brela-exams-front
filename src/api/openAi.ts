@@ -6,9 +6,10 @@ export const dynamic = 'force-dynamic';
 
 // Ensure the function is async and exported properly
 export async function sendPrompt(userPrompt: string) {
-  const API_URL = api_url || 'https://brela-exams-back-production.up.railway.app';
+  // const API_URL = api_url || 'https://brela-exams-back-production.up.railway.app';
+  const API_URL = 'http://localhost:5050';
 
-  console.log('API_URL:  ', API_URL);
+  console.log('API_URL:', API_URL);
   const response = await fetch(`${API_URL}/openai/prompt/`, {
     method: 'POST',
     headers: {
