@@ -7,7 +7,7 @@
 </div>
 <br>
 
-<section align="left">
+
 ## Current Features
 
 ✓ Enter a prompt for the exam you want - it can be anything!
@@ -18,7 +18,7 @@
 
 ## Planned Features
 
-<section align="left">
+<section width="400px">
 ✏ Users can take the exam once it is generated and receive grades.
 <br>
 ✏ Community Exams feature: Users can save exams to 'Community Exams'. Once approved by a moderator (a moderator dashboard needs to be created for approvals), the community can view and use these exams.
