@@ -3,12 +3,12 @@ import { Button, Skeleton } from '@mantine/core';
 import { twMerge } from 'tailwind-merge';
 import { Question } from '@/types';
 
-const RecievedTest = ({
-  questions,
+const ViewExam = ({
+  exam,
   isLoading,
   revealSolutions,
 }: {
-  questions: Question[] | undefined;
+  exam: Question[] | undefined;
   isLoading: boolean;
   revealSolutions: boolean;
 }) => {
@@ -24,20 +24,20 @@ const RecievedTest = ({
       {children}
     </div>
   );
-
+  console.log(exam);
   const numOfRows = 10; // Define the number of rows
   // const isLoading = true;
 
   return (
     <>
-      <div className="questions gap-4 grid grid-cols-1 lg:grid-cols-2 items-stretch">
+      <div className="exam gap-4 grid grid-cols-1 lg:grid-cols-2 items-stretch">
         {isLoading
           ? Array.from({ length: numOfRows }).map((_, index) => (
               <CardWrapper key={index}>
                 <Skeleton height={100} />
               </CardWrapper>
             ))
-          : questions?.map((q, index) => (
+          : exam?.map((q, index) => (
               <CardWrapper key={index}>
                 <h3 className="font-bold mb-2">{q.question}</h3>
                 <ul className="list-none pl-4">
@@ -73,4 +73,4 @@ const RecievedTest = ({
   );
 };
 
-export default RecievedTest;
+export default ViewExam;

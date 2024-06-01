@@ -6,6 +6,7 @@ import { AppShell, Burger, Group, useMantineColorScheme } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { usePathname } from 'next/navigation';
 
+import Link from 'next/link';
 import useWindowSize from '../../hooks/use-window-size';
 import { ColorSchemeToggle } from '../../components/ColorSchemeToggle';
 
@@ -33,7 +34,9 @@ function Layout({ children }: { children: ReactNode }) {
   }, [colorScheme]);
 
   const Logo = () => (
-    <div className="text-zinc-500 dark:text-zinc-300 text-xl font-semibold ">Brela Exams</div>
+    <a href="/" className="text-zinc-500 dark:text-zinc-300 text-xl font-semibold cursor-pointer">
+      Brela Exams
+    </a>
   );
 
   const headerHeight = 60;
@@ -55,7 +58,7 @@ function Layout({ children }: { children: ReactNode }) {
       {/* // custom scrollbar that starts below header */}
       <div style={{ overflowY: 'auto', height: `calc(100vh - ${headerHeight}px)` }}>
         {/* <div style={{ height: `calc(100vh - ${headerHeight}px)` }}> */}
-        <AppShell.Main>{children}</AppShell.Main>
+        <AppShell.Main className="mb-[200px]">{children}</AppShell.Main>
       </div>
     </AppShell>
   );

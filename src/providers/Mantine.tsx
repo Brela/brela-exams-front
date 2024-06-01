@@ -34,12 +34,11 @@ const MantineProvider = ({ children }: { children: React.ReactNode }) => {
         primaryColor: 'brand',
         components: {
           ...theme.components,
-
-          Button: Button.extend({
+          Button: {
             defaultProps: {
               color: 'brand',
             },
-          }),
+          },
           Modal: {
             styles: {
               title: {
@@ -48,74 +47,44 @@ const MantineProvider = ({ children }: { children: React.ReactNode }) => {
               },
             },
           },
-          Table: Table.extend({
-            defaultProps: {
-              classNames: () => ({
-                // thead: "dark:bg-zinc-900 light:bg-zinc-100"
-              }),
-              styles: {
-                thead: {
-                  zIndex: 2,
-                },
+          Table: {
+            styles: {
+              thead: {
+                zIndex: 2,
               },
             },
-          }),
-          Select: Select.extend({
-            styles: () => ({
+          },
+          Select: {
+            styles: {
               dropdown: {
                 maxHeight: 200,
                 overflowY: 'auto',
               },
-            }),
+            },
             defaultProps: {
               withScrollArea: false,
               checkIconPosition: 'right',
             },
-          }),
-
-          MultiSelect: MultiSelect.extend({
-            styles: () => ({
+          },
+          MultiSelect: {
+            styles: {
               dropdown: {
                 maxHeight: 200,
                 overflowY: 'auto',
               },
-            }),
+            },
             defaultProps: {
               withScrollArea: false,
               checkIconPosition: 'right',
             },
-          }),
-
-          Indicator: Indicator.extend({
+          },
+          Indicator: {
             defaultProps: {
               zIndex: 1,
               size: 18,
               offset: 3,
             },
-          }),
-
-          // Checkbox: Checkbox.extend({
-          //   defaultProps: {
-          //     // color: "brand",
-          //   },
-          // }),
-          // ActionIcon: ActionIcon.extend({
-          //   defaultProps: {
-          //     // color: "brand",
-          //   },
-          // }),
-          // Pagination: Pagination.extend({
-          //   defaultProps: {
-          //     // color: "brand",
-          //   },
-          // }),
-          // Button: Button.extend({
-          //   defaultProps: {},
-          // }),
-          // Loader: Loader.extend({
-          //   defaultProps: {},
-          // }),
-          // TextInput: TextInput.extend({}),
+          },
         },
       }}
     >
