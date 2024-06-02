@@ -16,8 +16,10 @@ import Toolbar from './_components/ToolBar';
 import './print.css';
 import './transitions.css';
 import PresetExams from './_components/PresetExams/PresetExams';
+import getColorMode from '@/utils/getColorMode';
 
 const Hub = () => {
+  const { darkMode, lightMode } = getColorMode();
   const { isMobile } = useWindowSize();
   const [revealSolutions, setRevealSolutions] = useState(false);
 
@@ -78,13 +80,13 @@ const Hub = () => {
                   {inputValue && (
                     <ActionIcon
                       size="sm"
-                      c="dimmed"
-                      bg="white"
-                      pl={6}
+                      className="text-zinc-400 dark:text-zinc-400"
+                      bg={lightMode ? 'white' : 'gray'}
+                      ml={6}
                       variant="subtle"
                       onClick={() => setInputValue('')}
                     >
-                      <IconX size="sm" />
+                      <IconX size="15px" />
                     </ActionIcon>
                   )}
                   <RecommendedPromptsMenu
