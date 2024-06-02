@@ -31,7 +31,6 @@ const RecommendedPrompts = ({
     'Make harder',
     'Use a Middle English tone',
     'Use a Pirate tone',
-    'Phrase in a superhero style',
   ];
 
   const responseIsIn = exam && exam?.length > 0;

@@ -16,7 +16,7 @@ const ToolBar = ({
 }) => {
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
   return (
-    <Group className=" p-1 px-2 rounded-md w-full flex justify-between">
+    <Group className=" p-1 px-2 rounded-md w-full flex justify-end">
       {/* <TabsGroup /> */}
       {/*       <Button variant="light" className="" size="xs">
         Take Exam

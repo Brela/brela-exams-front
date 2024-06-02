@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Box, Text, Tooltip } from '@mantine/core';
+import { Badge, Box, Button, Card, Flex, Group, Image, Text, Tooltip } from '@mantine/core';
 import { startCase } from 'lodash';
 import { Question } from '@/types';
 import {
@@ -49,9 +49,10 @@ const presetExams: PresetExam[] = [
     tag: Tag.Movies,
     questions: SetDisney,
   },
+
   {
     img: '/cards/pirateShip.webp',
-    imgAlt: 'pirate ship w/ dolphin jumping out of water',
+    imgAlt: 'pirate ship w/ doplhin jumping out of water',
     title: 'Pirate Trivia',
     prompt: 'Pirate Trivia with a pirate tone.',
     tag: Tag.History,
@@ -68,7 +69,7 @@ const presetExams: PresetExam[] = [
   {
     img: '/cards/stoicism.webp',
     imgAlt: 'roman architecture',
-    title: 'Stoicism',
+    title: 'stoicism',
     prompt: 'A test on Stoicism, in the tone of Marcus Aurelius',
     tag: Tag.History,
     questions: SetStoicism,
@@ -77,7 +78,7 @@ const presetExams: PresetExam[] = [
     img: '/cards/spanish.webp',
     imgAlt: 'spanish words',
     title: 'Beginner Spanish',
-    prompt: 'A beginner level Spanish exam',
+    prompt: 'A beginner level spanish exam',
     tag: Tag.Education,
     questions: SetSpanish,
   },
@@ -91,12 +92,15 @@ const presetExams: PresetExam[] = [
   },
 ];
 
+console.log(presetExams[0]);
 const PresetExams = ({ setExam }: { setExam: (exam: Question[]) => void }) => (
-  <div className="flex flex-wrap justify-center gap-4 p-4">
-    {presetExams.map((pExam, index) => (
-      <PresetCard key={index} pExam={pExam} setExam={setExam} />
-    ))}
-  </div>
+  <>
+    <div className="gap-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+      {presetExams.map((pExam, index) => (
+        <PresetCard key={index} pExam={pExam} setExam={setExam} className="col-span-1" />
+      ))}
+    </div>
+  </>
 );
 
 export default PresetExams;
@@ -104,38 +108,52 @@ export default PresetExams;
 const PresetCard = ({
   pExam,
   setExam,
+  className,
 }: {
   pExam: PresetExam;
   setExam: (exam: Question[]) => void;
+  className: string;
 }) => (
-  <div
-    className="flex flex-col items-center p-4 rounded-lg text-center cursor-pointer transition-transform duration-200 hover:scale-105 w-[120px]"
-    onClick={() => setExam(pExam.questions)}
-    onKeyDown={(e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        setExam(pExam.questions);
-      }
-    }}
-    role="button"
-    tabIndex={0}
-  >
-    <img
-      src={pExam.img}
-      alt={pExam.imgAlt || pExam.title}
-      className="w-12 h-12 object-cover rounded-full mb-2"
-    />
-    <Box className="flex flex-col items-center">
-      <Text size="sm" c="dimmed" mt={8}>
-        <Tooltip
-          color="gray"
-          label={<span className="font-semibold">Prompt: {pExam.prompt} </span>}
-          position="bottom"
-        >
-          <Text>{startCase(pExam.title)}</Text>
-        </Tooltip>
-      </Text>
-      {/* <Badge color={tagColors[pExam.tag]}>{startCase(pExam.tag)}</Badge> */}
-    </Box>
-  </div>
+  <Card shadow="sm" padding="lg" radius="md" withBorder className={className}>
+    <Card.Section>
+      <div style={{ width: '100%', height: '150px', objectFit: 'cover' }}>
+        <Image src={pExam.img} alt={pExam.imgAlt} style={{ width: '100%', height: '100%' }} />
+      </div>
+    </Card.Section>
+
+    <section className="flex flex-col justify-between h-full">
+      <Box>
+        <Group justify="space-between" mt="md" mb="xs">
+          <Text fw={500}> {startCase(pExam.title)}</Text>
+          {/*          <Badge size="xs" color={tagColors[pExam.tag]}>
+            {pExam.tag}
+          </Badge> */}
+          {/* <Badge color={tagColors[pExam.tag]}>{pExam.tag}</Badge> */}
+        </Group>
+
+        <Text size="sm" c="dimmed" mt={8}>
+          <Tooltip
+            color="gray"
+            label="The prompt given to openAi api to recieve this test"
+            position="bottom"
+          >
+            <span className="font-semibold">Prompt: </span>
+          </Tooltip>
+          {pExam.prompt}
+        </Text>
+      </Box>
+      <Button
+        onClick={() => setExam(pExam.questions)}
+        color="blue"
+        // w="50%"
+        fullWidth
+        mx="auto"
+        mt="md"
+        variant="light"
+        radius="md"
+      >
+        Take Exam
+      </Button>
+    </section>
+  </Card>
 );

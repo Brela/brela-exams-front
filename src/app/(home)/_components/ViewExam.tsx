@@ -34,7 +34,7 @@ const ViewExam = ({
         {isLoading
           ? Array.from({ length: numOfRows }).map((_, index) => (
               <CardWrapper key={index}>
-                <Skeleton height={100} />
+                <Skeleton height={150} />
               </CardWrapper>
             ))
           : exam?.map((q, index) => (

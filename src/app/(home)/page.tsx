@@ -1,10 +1,11 @@
 'use client';
 
 import { ActionIcon, Box, Divider, Group, Text, TextInput } from '@mantine/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconSearch, IconX } from '@tabler/icons-react';
 import { toast } from 'react-toastify';
 import { twMerge } from 'tailwind-merge';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { sendPrompt } from '@/api/openAi';
 import ViewExam from './_components/ViewExam';
 import { Question } from '@/types';
@@ -12,6 +13,7 @@ import RecommendedPromptsMenu from './_components/RecommendedPromptsMenu';
 import useWindowSize from '@/hooks/use-window-size';
 import Toolbar from './_components/ToolBar';
 import './print.css';
+import './transitions.css';
 import PresetExams from './_components/PresetExams/PresetExams';
 
 const Hub = () => {
@@ -49,52 +51,53 @@ const Hub = () => {
 
   return (
     <>
-      <Box className="flex flex-col items-center w-[100vw] px-[15vw] sm:px-[10vw] lg:px-[15vw]">
+      {/*  whole home page box */}
+      <Box className="flex flex-col items-center ">
         {/* ---- prompt section ---- */}
-        <div className="pb-10 w-full h-[10vh] no-print">
+        <div className="flex items-center justify-center  w-full h-[20vh] gutters-lg">
           <form
             onSubmit={(e) => {
               e?.preventDefault();
               handlePrompt(inputValue);
             }}
           >
-            <div className="flex justify-center items-center w-full gap-3">
-              <TextInput
-                w={isMobile ? 350 : 600}
-                leftSection={<IconSearch size={18} />}
-                placeholder='Enter desired exam ( e.g. "Beginner Spanish" )'
-                size="md"
-                radius="lg"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                disabled={isLoading}
-                rightSection={
-                  <div className="flex items-center gap-1 mr-6">
-                    {inputValue && (
-                      <ActionIcon
-                        size="sm"
-                        c="dimmed"
-                        variant="subtle"
-                        onClick={() => setInputValue('')}
-                      >
-                        <IconX size="sm" />
-                      </ActionIcon>
-                    )}
-                    <RecommendedPromptsMenu
-                      exam={exam}
-                      setInputValue={setInputValue}
-                      handlePrompt={handlePrompt}
-                      hasFetchedExam={hasFetchedExam}
-                    />
-                  </div>
-                }
-              />
-            </div>
+            <TextInput
+              w={isMobile ? 350 : 600}
+              leftSection={<IconSearch size={18} />}
+              placeholder='Enter desired exam ( e.g. "Beginner Spanish" )'
+              size="md"
+              radius="lg"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              disabled={isLoading}
+              rightSection={
+                <div className="flex items-center gap-1 mr-6">
+                  {inputValue && (
+                    <ActionIcon
+                      size="sm"
+                      c="dimmed"
+                      bg="white"
+                      pl={6}
+                      variant="subtle"
+                      onClick={() => setInputValue('')}
+                    >
+                      <IconX size="sm" />
+                    </ActionIcon>
+                  )}
+                  <RecommendedPromptsMenu
+                    exam={exam}
+                    setInputValue={setInputValue}
+                    handlePrompt={handlePrompt}
+                    hasFetchedExam={hasFetchedExam}
+                  />
+                </div>
+              }
+            />
           </form>
         </div>
         {/* ---- end prompt section ---- */}
 
-        <Box className="flex flex-col items-end printable-content">
+        <Box className="flex flex-col items-center printable-content">
           {isExamShowing && (
             <>
               <Toolbar
@@ -104,15 +107,17 @@ const Hub = () => {
               />
             </>
           )}
+          {/* <TransitionGroup>
+            <CSSTransition key={exam ? exam[0].question : ''} classNames="exam" timeout={1000}> */}
           <ViewExam exam={exam} isLoading={isLoading} revealSolutions={revealSolutions} />
-          <div className={twMerge(isExamShowing ? 'mt-[200px] ' : 'mt-[90px] ')}>
-            <div className="mb-4 mx-auto font-semibold text-zinc-500 dark:text-zinc-400 w-full flex justify-center text-xl">
-              Presets
-            </div>
-            <Divider className="mb-4" />
-            <PresetExams setExam={setExam} />
-          </div>
         </Box>
+        <div className={twMerge(' gutters-sm', isExamShowing ? 'mt-[200px] ' : 'mt-[90px] ')}>
+          <div className="mb-4 mx-auto font-semibold text-zinc-400 dark:text-zinc-400 w-full flex justify-center text-xl">
+            Preset Exams
+          </div>
+          {/* <Divider className="mb-4" /> */}
+          <PresetExams setExam={setExam} />
+        </div>
       </Box>
     </>
   );

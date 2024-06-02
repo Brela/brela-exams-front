@@ -6,6 +6,7 @@
 body,
 html {
   overflow: hidden;
+  scroll-behavior: smooth;
 }
 
 .custom-underline {
@@ -15,45 +16,42 @@ html {
   text-decoration-thickness: 1px;
 }
 
-.animated-bg-gradient {
-  background: linear-gradient(270deg, #cee7ed, #dcebe3, #fbeddc, #e5f5d8);
-  background-size: 600% 600%;
-
-  -webkit-animation: AnimationName 12s ease infinite;
-  -moz-animation: AnimationName 12s ease infinite;
-  animation: AnimationName 12s ease infinite;
+/* gutters sm */
+.gutters-sm {
+  padding-left: 5vw;
+  padding-right: 5vw;
 }
 
-@-webkit-keyframes AnimationName {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+@media (min-width: 640px) {
+  .gutters-sm {
+    padding-left: 3vw;
+    padding-right: 3vw;
   }
 }
-@-moz-keyframes AnimationName {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+
+@media (min-width: 1024px) {
+  .gutters-sm {
+    padding-left: 5vw;
+    padding-right: 5vw;
   }
 }
-@keyframes AnimationName {
-  0% {
-    background-position: 0% 50%;
+
+/* gutters lg */
+.gutters-lg {
+  padding-left: 15vw;
+  padding-right: 15vw;
+}
+
+@media (min-width: 640px) {
+  .gutters-lg {
+    padding-left: 10vw;
+    padding-right: 10vw;
   }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+}
+
+@media (min-width: 1024px) {
+  .gutters-lg {
+    padding-left: 15vw;
+    padding-right: 15vw;
   }
 }
