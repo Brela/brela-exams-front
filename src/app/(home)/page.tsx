@@ -129,7 +129,7 @@ const Hub = () => {
             Preset Exams
           </div>
           {/* <Divider className="mb-4" /> */}
-          <PresetExams setExam={setExam} />
+          <PresetExams setExam={setExam} setInputValue={setInputValue} />
         </div>
       </Box>
     </>

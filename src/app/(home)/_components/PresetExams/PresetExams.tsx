@@ -91,10 +91,16 @@ const presetExams: PresetExam[] = [
   },
 ];
 
-const PresetExams = ({ setExam }: { setExam: (exam: Question[]) => void }) => (
+const PresetExams = ({
+  setExam,
+  setInputValue,
+}: {
+  setExam: (exam: Question[]) => void;
+  setInputValue: (value: string) => void;
+}) => (
   <div className="flex flex-wrap justify-center gap-4 p-4">
     {presetExams.map((pExam, index) => (
-      <PresetCard key={index} pExam={pExam} setExam={setExam} />
+      <PresetCard key={index} pExam={pExam} setExam={setExam} setInputValue={setInputValue} />
     ))}
   </div>
 );
@@ -104,17 +110,23 @@ export default PresetExams;
 const PresetCard = ({
   pExam,
   setExam,
+  setInputValue,
 }: {
   pExam: PresetExam;
   setExam: (exam: Question[]) => void;
+  setInputValue: (value: string) => void;
 }) => (
   <div
     className="flex flex-col items-center p-4 rounded-lg text-center cursor-pointer transition-transform duration-200 hover:scale-105 w-[120px]"
-    onClick={() => setExam(pExam.questions)}
+    onClick={() => {
+      setExam(pExam.questions);
+      setInputValue(pExam.prompt);
+    }}
     onKeyDown={(e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         setExam(pExam.questions);
+        setInputValue(pExam.prompt);
       }
     }}
     role="button"
