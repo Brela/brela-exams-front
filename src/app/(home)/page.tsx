@@ -6,6 +6,7 @@ import { IconSearch, IconX } from '@tabler/icons-react';
 import { toast } from 'react-toastify';
 import { twMerge } from 'tailwind-merge';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { uniqueId } from 'lodash';
 import { sendPrompt } from '@/api/openAi';
 import ViewExam from './_components/ViewExam';
 import { Question } from '@/types';
@@ -28,8 +29,10 @@ const Hub = () => {
 
   async function handlePrompt(currValue: string) {
     setIsLoading(true);
+    setRevealSolutions(false);
     let body = currValue;
 
+    // if the user hasn't sent a prompt yet, add the preset exam with the asjustment request
     if (!hasFetchedExam && exam) {
       body += ` Here is the exam that needs adjusted: ${JSON.stringify(exam)}`;
     }
@@ -107,11 +110,21 @@ const Hub = () => {
               />
             </>
           )}
-          {/* <TransitionGroup>
-            <CSSTransition key={exam ? exam[0].question : ''} classNames="exam" timeout={1000}> */}
-          <ViewExam exam={exam} isLoading={isLoading} revealSolutions={revealSolutions} />
+          <TransitionGroup>
+            <CSSTransition
+              key={exam ? exam[0].question : 'no-exam'} // Ensure unique key for each exam
+              timeout={300} // Duration of the transition in milliseconds
+              classNames="fade" // Class prefix for the transition states
+            >
+              {exam ? (
+                <ViewExam exam={exam} isLoading={isLoading} revealSolutions={revealSolutions} />
+              ) : (
+                <div /> // Render an empty div if no exam to maintain structure
+              )}
+            </CSSTransition>
+          </TransitionGroup>
         </Box>
-        <div className={twMerge(' gutters-sm', isExamShowing ? 'mt-[200px] ' : 'mt-[90px] ')}>
+        <div className={twMerge(' gutters-sm', isExamShowing ? 'mt-[100px] ' : 'mt-[30px] ')}>
           <div className="mb-4 mx-auto font-semibold text-zinc-400 dark:text-zinc-400 w-full flex justify-center text-xl">
             Preset Exams
           </div>

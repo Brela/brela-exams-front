@@ -1,13 +1,14 @@
 import safeStringify from 'json-stringify-safe';
 import { api_url } from './_config';
 
+// these fix the automatic 10 second timeout from next when hosted on vercel
 export const maxDuration = 20;
 export const dynamic = 'force-dynamic';
 
 // Ensure the function is async and exported properly
 export async function sendPrompt(userPrompt: string) {
-  // const API_URL = api_url || 'https://brela-exams-back-production.up.railway.app';
-  const API_URL = 'http://localhost:5050';
+  const API_URL = api_url || 'https://brela-exams-back-production.up.railway.app';
+  // const API_URL = 'http://localhost:5050';
 
   console.log('API_URL:', API_URL);
   const response = await fetch(`${API_URL}/openai/prompt/`, {

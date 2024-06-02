@@ -1,25 +1,17 @@
-.exam-enter {
+.fade-enter {
   opacity: 0;
-  transform: translateY(20px);
 }
 
-.exam-enter-active {
+.fade-enter-active {
   opacity: 1;
-  transform: translateY(0);
-  transition:
-    opacity 500ms,
-    transform 1000ms;
+  transition: opacity 300ms;
 }
 
-.exam-exit {
+.fade-exit {
   opacity: 1;
-  transform: translateY(0);
 }
 
-.exam-exit-active {
+.fade-exit-active {
   opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 500ms,
-    transform 1000ms;
+  transition: opacity 300ms;
 }
