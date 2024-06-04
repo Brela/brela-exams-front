@@ -1,18 +1,21 @@
 import { ActionIcon, Box, Button, Divider, Group, Tooltip } from '@mantine/core';
-import { IconDownload, IconEye, IconPrinter } from '@tabler/icons-react';
+import { IconDownload, IconEye, IconPrinter, IconRefresh } from '@tabler/icons-react';
 import React, { useState } from 'react';
 import PrintModal from './printModal/PrintModal';
 import { Question } from '@/types';
-import TabsGroup from './Tabs';
 
 const ToolBar = ({
   setRevealSolutions,
   responseIsIn,
   exam,
+  handleReset,
+  showReset,
 }: {
   setRevealSolutions: React.Dispatch<React.SetStateAction<boolean>>;
   responseIsIn: boolean;
   exam: Question[];
+  handleReset: () => void;
+  showReset: boolean;
 }) => {
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
   return (
@@ -22,6 +25,18 @@ const ToolBar = ({
         Take Exam
       </Button> */}
       <Group>
+        {/* reset */}
+        {showReset && (
+          <>
+            <Tooltip label="Reset" position="top" c="white" bg="gray">
+              <ActionIcon onClick={handleReset} className="px-2" variant="subtle" c="gray">
+                <IconRefresh size={20} />
+              </ActionIcon>
+            </Tooltip>
+            <Divider orientation="vertical" />
+          </>
+        )}
+
         {/* print */}
         <Tooltip label="Print" position="top" c="white" bg="gray">
           <ActionIcon

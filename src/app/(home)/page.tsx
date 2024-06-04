@@ -103,15 +103,6 @@ const Hub = () => {
         {/* ---- end prompt section ---- */}
 
         <Box className="flex flex-col items-center printable-content">
-          {isExamShowing && (
-            <>
-              <Toolbar
-                setRevealSolutions={setRevealSolutions}
-                responseIsIn={isExamShowing}
-                exam={exam}
-              />
-            </>
-          )}
           <TransitionGroup>
             <CSSTransition
               key={exam ? exam[0].question : 'no-exam'} // Ensure unique key for each exam
@@ -119,7 +110,12 @@ const Hub = () => {
               classNames="fade" // Class prefix for the transition states
             >
               {exam ? (
-                <ViewExam exam={exam} isLoading={isLoading} revealSolutions={revealSolutions} />
+                <ViewExam
+                  exam={exam}
+                  isLoading={isLoading}
+                  revealSolutions={revealSolutions}
+                  setRevealSolutions={setRevealSolutions}
+                />
               ) : (
                 <div /> // Render an empty div if no exam to maintain structure
               )}
