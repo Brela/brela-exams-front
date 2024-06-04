@@ -1,7 +1,7 @@
 import { rem, Tabs } from '@mantine/core';
 import React from 'react';
 import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
-import ViewExam from './ViewExam';
+import ViewExam from './Exam';
 
 const TabsGroup = () => {
   const iconStyle = { width: rem(12), height: rem(12) };

@@ -74,7 +74,7 @@ const presetExams: PresetExam[] = [
     questions: SetStoicism,
   },
   {
-    img: '/cards/spanish.webp',
+    img: '/cards/spanish.jpg',
     imgAlt: 'spanish words',
     title: 'Beginner Spanish',
     prompt: 'A beginner level Spanish exam',
@@ -138,7 +138,7 @@ const PresetCard = ({
       className="w-12 h-12 object-cover rounded-full mb-2"
     />
     <Box className="flex flex-col items-center">
-      <Text size="sm" c="dimmed" mt={8}>
+      <Text size="md" c="dimmed" mt={8}>
         <Tooltip
           color="gray"
           label={<span className="font-semibold">Prompt: {pExam.prompt} </span>}

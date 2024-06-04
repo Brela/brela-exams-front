@@ -8,7 +8,7 @@ import { twMerge } from 'tailwind-merge';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { uniqueId } from 'lodash';
 import { sendPrompt } from '@/api/openAi';
-import ViewExam from './_components/ViewExam';
+import ViewExam from './_components/Exam';
 import { Question } from '@/types';
 import RecommendedPromptsMenu from './_components/RecommendedPromptsMenu';
 import useWindowSize from '@/hooks/use-window-size';
