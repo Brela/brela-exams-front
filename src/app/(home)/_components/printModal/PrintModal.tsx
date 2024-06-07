@@ -1,4 +1,4 @@
-import { Modal, Button, Box } from '@mantine/core';
+import { Modal, Button, Box, Notification } from '@mantine/core';
 import { FC, useEffect } from 'react';
 import { Question } from '@/types';
 
@@ -53,6 +53,9 @@ const PrintModal: FC<PrintModalProps> = ({ isOpen, onClose, questions }) => {
           </div>
         ))}
       </Box>
+      <Notification title="Warning" color="orange" className="py-3 my-5" withCloseButton={false}>
+        This Print Feature Needs Work, Check back soon to make use of it!
+      </Notification>
       <Button onClick={handlePrint} className="no-print">
         Confirm and Print
       </Button>

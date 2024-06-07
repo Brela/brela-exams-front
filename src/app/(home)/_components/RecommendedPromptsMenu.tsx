@@ -18,12 +18,12 @@ const RecommendedPrompts = ({
   const { darkMode, lightMode } = getColorMode();
 
   const examPrompts = [
-    'Simple Ocean Trivia',
+    'Ocean Trivia',
     'Beginner Spanish',
     'Disney Trivia',
-    'Preschool Math',
     'Advanced Physics',
     'World History',
+    'Freshman Final Exam - Hogwarts',
   ];
 
   const adjustmentPrompts = [
