@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ActionIcon, Button, Skeleton, Tooltip, UnstyledButton } from '@mantine/core';
+import { ActionIcon, Tooltip, UnstyledButton } from '@mantine/core';
 import { twMerge } from 'tailwind-merge';
-import { IconRefresh, IconArrowRight } from '@tabler/icons-react';
+import { IconRefresh, IconCheck } from '@tabler/icons-react';
 import ToolBar from './ToolBar';
 import { Question } from '@/types';
 import CardSectionGrid from './CardSectionGrid';
@@ -12,17 +12,20 @@ const Exam = ({
   isLoading,
   revealSolutions,
   setRevealSolutions,
+  selectedAnswers,
+  setSelectedAnswers,
+  isCompleted,
+  setIsCompleted,
 }: {
   exam: Question[];
   isLoading: boolean;
   revealSolutions: boolean;
   setRevealSolutions: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedAnswers: (number | null)[];
+  setSelectedAnswers: React.Dispatch<React.SetStateAction<(number | null)[]>>;
+  isCompleted: boolean;
+  setIsCompleted: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(
-    Array(exam?.length).fill(null)
-  );
-  const [isCompleted, setIsCompleted] = useState(false);
-
   const handleAnswerClick = (questionIndex: number, answerIndex: number) => {
     if (selectedAnswers[questionIndex] === null) {
       const newSelectedAnswers = [...selectedAnswers];
@@ -48,62 +51,67 @@ const Exam = ({
     setIsCompleted(false);
   };
 
-  const getOptionClassName = (index: number, i: number, correctIndex: number) => {
-    if (selectedAnswers[index] === null) return 'cursor-pointer';
-    // if (revealSolutions) return 'text-green-600';
-    if (selectedAnswers[index] === i) {
-      return correctIndex === i ? 'text-green-600' : 'text-red-600 dark:text-red-400';
-    }
-    return 'text-zinc-700';
-  };
+  const questionAnswered = (index: number) => selectedAnswers[index] !== null;
+  const questionIsCorrect = (index: number) =>
+    selectedAnswers[index] === exam[index].answerArrPosition;
 
-  const numOfRows = 10; // Define the number of rows
-  const isExamShowing = (exam && exam?.length > 0) || false;
+  const getOptionClassName = (index: number, i: number, correctIndex: number) => {
+    if (!questionAnswered(index)) return 'cursor-pointer';
+    if (selectedAnswers[index] === i) {
+      return questionIsCorrect(index) ? 'text-green-600' : 'text-red-600 dark:text-red-400';
+    }
+    return 'text-zinc-700 dark:text-zinc-300';
+  };
 
   return (
     <>
-      <>
-        {exam && exam.length > 0 && (
-          <ToolBar
-            setRevealSolutions={setRevealSolutions}
-            responseIsIn={isExamShowing}
-            exam={exam}
-            handleReset={handleReset}
-            showReset={selectedAnswers.some((answer) => answer !== null)}
-          />
-        )}
-      </>
+      {exam && exam.length > 0 && (
+        <ToolBar
+          setRevealSolutions={setRevealSolutions}
+          responseIsIn={exam.length > 0}
+          exam={exam}
+          handleReset={handleReset}
+          showReset={selectedAnswers.some((answer) => answer !== null)}
+        />
+      )}
       <CardSectionGrid>
-        <>
-          {exam?.map((q, index) => (
-            <CardWrapper key={index} className="" isLoading={isLoading}>
+        {exam?.map((q, index) => (
+          <CardWrapper key={index} className="relative" isLoading={isLoading}>
+            <div className="flex">
+              <div className="mr-2">{`${index + 1})`}</div>
               <h3 className="font-bold mb-2">{q.question}</h3>
-              <ul className="list-none pl-4">
-                {q.options.map((option, i) => (
-                  <li
-                    key={i}
-                    className={`${getOptionClassName(index, i, q.answerArrPosition)} flex items-center`}
+            </div>
+
+            <ul className="list-none pl-6">
+              {q.options.map((option, i) => (
+                <li
+                  key={i}
+                  className={`${getOptionClassName(index, i, q.answerArrPosition)} flex items-center`}
+                >
+                  <UnstyledButton
+                    disabled={questionAnswered(index)}
+                    onClick={() => handleAnswerClick(index, i)}
+                    className={twMerge(
+                      'flex-grow',
+                      questionAnswered(index) &&
+                        !questionIsCorrect(index) &&
+                        q.answerArrPosition === i &&
+                        'underline',
+                      `${revealSolutions && q.answerArrPosition === i ? 'font-bold text-green-600' : ''}`
+                    )}
                   >
-                    <UnstyledButton
-                      disabled={selectedAnswers[index] !== null}
-                      onClick={() => handleAnswerClick(index, i)}
-                      className={twMerge(
-                        'flex-grow',
-                        selectedAnswers[index] !== null &&
-                          selectedAnswers[index] !== q.answerArrPosition &&
-                          q.answerArrPosition === i &&
-                          'underline',
-                        `${revealSolutions && q.answerArrPosition === i ? 'font-bold text-green-600' : ''}`
-                      )}
-                    >
-                      {option}
-                    </UnstyledButton>
-                  </li>
-                ))}
-              </ul>
-            </CardWrapper>
-          ))}
-        </>
+                    {option}
+                  </UnstyledButton>
+                </li>
+              ))}
+            </ul>
+            {questionAnswered(index) && (
+              <div className="absolute bottom-0 right-0 p-2">
+                {questionIsCorrect(index) && <IconCheck color="green" />}
+              </div>
+            )}
+          </CardWrapper>
+        ))}
       </CardSectionGrid>
       {isCompleted && (
         <div className="mt-4 flex justify-center items-center">

@@ -20,16 +20,25 @@ import getColorMode from '@/utils/getColorMode';
 import CardSectionGrid from './_components/CardSectionGrid';
 import CardWrapper from './_components/CardWrapper';
 
-const Hub = () => {
+const Home = () => {
+  const desiredExamLength = 10;
   const { darkMode, lightMode } = getColorMode();
   const { isMobile } = useWindowSize();
   const [revealSolutions, setRevealSolutions] = useState(false);
-
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [exam, setExam] = useState<Question[]>([]);
   // if the user uses one of the adjustment prompts "make easier" but hasn't  fetched an exam yet, we need to send the presetSelectedExam with the req for context
   const [hasFetchedExam, setHasFetchedExam] = useState(false);
+  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(
+    Array(desiredExamLength).fill(null)
+  );
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  const handleReset = () => {
+    setSelectedAnswers(Array(10).fill(null));
+    setIsCompleted(false);
+  };
 
   async function handlePrompt(currValue: string) {
     setIsLoading(true);
@@ -119,6 +128,10 @@ const Hub = () => {
               isLoading={isLoading}
               revealSolutions={revealSolutions}
               setRevealSolutions={setRevealSolutions}
+              selectedAnswers={selectedAnswers}
+              setSelectedAnswers={setSelectedAnswers}
+              isCompleted={isCompleted}
+              setIsCompleted={setIsCompleted}
             />
           )}
         </Box>
@@ -127,11 +140,11 @@ const Hub = () => {
             Preset Exams
           </div>
           {/* <Divider className="mb-4" /> */}
-          <PresetExams setExam={setExam} setInputValue={setInputValue} />
+          <PresetExams setExam={setExam} setInputValue={setInputValue} handleReset={handleReset} />
         </div>
       </Box>
     </>
   );
 };
 
-export default Hub;
+export default Home;

@@ -94,13 +94,21 @@ const presetExams: PresetExam[] = [
 const PresetExams = ({
   setExam,
   setInputValue,
+  handleReset,
 }: {
   setExam: (exam: Question[]) => void;
   setInputValue: (value: string) => void;
+  handleReset: () => void;
 }) => (
   <div className="flex flex-wrap justify-center gap-4 p-4">
     {presetExams.map((pExam, index) => (
-      <PresetCard key={index} pExam={pExam} setExam={setExam} setInputValue={setInputValue} />
+      <PresetCard
+        key={index}
+        pExam={pExam}
+        setExam={setExam}
+        setInputValue={setInputValue}
+        handleReset={handleReset}
+      />
     ))}
   </div>
 );
@@ -111,22 +119,26 @@ const PresetCard = ({
   pExam,
   setExam,
   setInputValue,
+  handleReset,
 }: {
   pExam: PresetExam;
   setExam: (exam: Question[]) => void;
   setInputValue: (value: string) => void;
+  handleReset: () => void;
 }) => (
   <div
     className="flex flex-col items-center p-4 rounded-lg text-center cursor-pointer transition-transform duration-200 hover:scale-105 w-[120px]"
     onClick={() => {
       setExam(pExam.questions);
       setInputValue(pExam.prompt);
+      handleReset();
     }}
     onKeyDown={(e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         setExam(pExam.questions);
         setInputValue(pExam.prompt);
+        handleReset();
       }
     }}
     role="button"
