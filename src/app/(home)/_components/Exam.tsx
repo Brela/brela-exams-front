@@ -4,6 +4,8 @@ import { twMerge } from 'tailwind-merge';
 import { IconRefresh, IconArrowRight } from '@tabler/icons-react';
 import ToolBar from './ToolBar';
 import { Question } from '@/types';
+import CardSectionGrid from './CardSectionGrid';
+import CardWrapper from './CardWrapper';
 
 const Exam = ({
   exam,
@@ -55,78 +57,54 @@ const Exam = ({
     return 'text-zinc-700';
   };
 
-  const CardWrapper = ({
-    children,
-    className,
-  }: {
-    children: React.ReactNode;
-    className?: string;
-  }) => (
-    <div
-      className={twMerge(
-        'question-card max-w-[95vw] w-[70vw] lg:w-[30vw] rounded shadow',
-        className,
-        isLoading ? '' : 'p-4 border dark:border-zinc-600'
-      )}
-    >
-      {children}
-    </div>
-  );
-
   const numOfRows = 10; // Define the number of rows
   const isExamShowing = (exam && exam?.length > 0) || false;
 
   return (
     <>
       <>
-        <ToolBar
-          setRevealSolutions={setRevealSolutions}
-          responseIsIn={isExamShowing}
-          exam={exam}
-          handleReset={handleReset}
-          showReset={selectedAnswers.some((answer) => answer !== null)}
-        />
-      </>
-      <div className="exam gap-4 grid grid-cols-1 lg:grid-cols-2 items-stretch">
-        {isLoading ? (
-          Array.from({ length: numOfRows }).map((_, index) => (
-            <CardWrapper key={index}>
-              <Skeleton height={150} />
-            </CardWrapper>
-          ))
-        ) : (
-          <>
-            {exam?.map((q, index) => (
-              <CardWrapper key={index} className="">
-                <h3 className="font-bold mb-2">{q.question}</h3>
-                <ul className="list-none pl-4">
-                  {q.options.map((option, i) => (
-                    <li
-                      key={i}
-                      className={`${getOptionClassName(index, i, q.answerArrPosition)} flex items-center`}
-                    >
-                      <UnstyledButton
-                        disabled={selectedAnswers[index] !== null}
-                        onClick={() => handleAnswerClick(index, i)}
-                        className={twMerge(
-                          'flex-grow',
-                          selectedAnswers[index] !== null &&
-                            selectedAnswers[index] !== q.answerArrPosition &&
-                            q.answerArrPosition === i &&
-                            'underline',
-                          `${revealSolutions && q.answerArrPosition === i ? 'font-bold text-green-600' : ''}`
-                        )}
-                      >
-                        {option}
-                      </UnstyledButton>
-                    </li>
-                  ))}
-                </ul>
-              </CardWrapper>
-            ))}
-          </>
+        {exam && exam.length > 0 && (
+          <ToolBar
+            setRevealSolutions={setRevealSolutions}
+            responseIsIn={isExamShowing}
+            exam={exam}
+            handleReset={handleReset}
+            showReset={selectedAnswers.some((answer) => answer !== null)}
+          />
         )}
-      </div>
+      </>
+      <CardSectionGrid>
+        <>
+          {exam?.map((q, index) => (
+            <CardWrapper key={index} className="" isLoading={isLoading}>
+              <h3 className="font-bold mb-2">{q.question}</h3>
+              <ul className="list-none pl-4">
+                {q.options.map((option, i) => (
+                  <li
+                    key={i}
+                    className={`${getOptionClassName(index, i, q.answerArrPosition)} flex items-center`}
+                  >
+                    <UnstyledButton
+                      disabled={selectedAnswers[index] !== null}
+                      onClick={() => handleAnswerClick(index, i)}
+                      className={twMerge(
+                        'flex-grow',
+                        selectedAnswers[index] !== null &&
+                          selectedAnswers[index] !== q.answerArrPosition &&
+                          q.answerArrPosition === i &&
+                          'underline',
+                        `${revealSolutions && q.answerArrPosition === i ? 'font-bold text-green-600' : ''}`
+                      )}
+                    >
+                      {option}
+                    </UnstyledButton>
+                  </li>
+                ))}
+              </ul>
+            </CardWrapper>
+          ))}
+        </>
+      </CardSectionGrid>
       {isCompleted && (
         <div className="mt-4 flex justify-center items-center">
           <h2 className="font-bold mr-4">Your Grade: {calculateGrade()}%</h2>

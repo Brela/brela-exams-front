@@ -1,6 +1,6 @@
 'use client';
 
-import { ActionIcon, Box, Divider, Group, Text, TextInput } from '@mantine/core';
+import { ActionIcon, Box, Divider, Group, Skeleton, Text, TextInput } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { IconSearch, IconX } from '@tabler/icons-react';
 import { toast } from 'react-toastify';
@@ -17,6 +17,8 @@ import './print.css';
 import './transitions.css';
 import PresetExams from './_components/PresetExams/PresetExams';
 import getColorMode from '@/utils/getColorMode';
+import CardSectionGrid from './_components/CardSectionGrid';
+import CardWrapper from './_components/CardWrapper';
 
 const Hub = () => {
   const { darkMode, lightMode } = getColorMode();
@@ -25,7 +27,7 @@ const Hub = () => {
 
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [exam, setExam] = useState<Question[]>();
+  const [exam, setExam] = useState<Question[]>([]);
   // if the user uses one of the adjustment prompts "make easier" but hasn't  fetched an exam yet, we need to send the presetSelectedExam with the req for context
   const [hasFetchedExam, setHasFetchedExam] = useState(false);
 
@@ -103,24 +105,22 @@ const Hub = () => {
         {/* ---- end prompt section ---- */}
 
         <Box className="flex flex-col items-center printable-content">
-          <TransitionGroup>
-            <CSSTransition
-              key={exam ? exam[0].question : 'no-exam'} // Ensure unique key for each exam
-              timeout={300} // Duration of the transition in milliseconds
-              classNames="fade" // Class prefix for the transition states
-            >
-              {exam ? (
-                <ViewExam
-                  exam={exam}
-                  isLoading={isLoading}
-                  revealSolutions={revealSolutions}
-                  setRevealSolutions={setRevealSolutions}
-                />
-              ) : (
-                <div /> // Render an empty div if no exam to maintain structure
-              )}
-            </CSSTransition>
-          </TransitionGroup>
+          {isLoading ? (
+            <CardSectionGrid>
+              {Array.from({ length: 10 }).map((_, index) => (
+                <CardWrapper key={index} isLoading={isLoading}>
+                  <Skeleton height={150} />
+                </CardWrapper>
+              ))}
+            </CardSectionGrid>
+          ) : (
+            <ViewExam
+              exam={exam}
+              isLoading={isLoading}
+              revealSolutions={revealSolutions}
+              setRevealSolutions={setRevealSolutions}
+            />
+          )}
         </Box>
         <div className={twMerge(' gutters-sm', isExamShowing ? 'mt-[100px] ' : 'mt-[30px] ')}>
           <div className="mb-4 mx-auto font-semibold text-zinc-400 dark:text-zinc-400 w-full flex justify-center text-xl">
