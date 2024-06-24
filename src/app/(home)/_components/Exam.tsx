@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ActionIcon, Tooltip, UnstyledButton } from '@mantine/core';
 import { twMerge } from 'tailwind-merge';
-import { IconRefresh, IconCheck } from '@tabler/icons-react';
+import { IconRefresh, IconCheck, IconX } from '@tabler/icons-react';
 import ToolBar from './ToolBar';
 import { Question } from '@/types';
 import CardSectionGrid from './CardSectionGrid';
@@ -28,7 +28,10 @@ const Exam = ({
   setIsCompleted: React.Dispatch<React.SetStateAction<boolean>>;
   handleReset: () => void;
 }) => {
+  console.log(isCompleted);
   const handleAnswerClick = (questionIndex: number, answerIndex: number) => {
+    if (revealSolutions) return;
+
     console.log(`Question: ${questionIndex}, Answer: ${answerIndex}`);
     const newSelectedAnswers = [...selectedAnswers];
     newSelectedAnswers[questionIndex] = answerIndex;
@@ -38,7 +41,7 @@ const Exam = ({
     const allCorrect = newSelectedAnswers.every(
       (answer, index) => answer === exam[index].answerArrPosition
     );
-    setIsCompleted(allAnswered && allCorrect);
+    setIsCompleted(allAnswered);
   };
 
   const calculateGrade = () => {
@@ -49,21 +52,22 @@ const Exam = ({
     return ((correctAnswers.length / exam.length) * 100).toFixed(2);
   };
 
-  const questionAnswered = (index: number) => {
-    console.log(`Question ${index} answered:`, selectedAnswers[index] !== null);
-    return selectedAnswers[index] !== null;
-  };
-
+  const questionAnswered = (index: number) => selectedAnswers[index] !== null;
   const questionIsCorrect = (index: number) =>
     selectedAnswers[index] === exam[index].answerArrPosition;
 
   const getOptionClassName = (index: number, i: number, correctIndex: number) => {
+    if (revealSolutions) {
+      return i === correctIndex ? 'font-bold underline' : '';
+    }
     if (!questionAnswered(index)) return 'cursor-pointer';
     if (selectedAnswers[index] === i) {
-      return questionIsCorrect(index) ? 'text-green-600' : 'text-red-600 dark:text-red-400';
+      return questionIsCorrect(index)
+        ? 'text-green-600 font-bold'
+        : 'text-red-600 dark:text-red-400 ';
     }
-    if (revealSolutions && correctIndex === i) {
-      return 'font-bold text-green-600';
+    if (selectedAnswers[index] !== i && i === correctIndex) {
+      return 'underline';
     }
     return 'text-zinc-700 dark:text-zinc-300';
   };
@@ -92,7 +96,7 @@ const Exam = ({
                 <UnstyledButton
                   key={i}
                   onClick={() => handleAnswerClick(index, i)}
-                  disabled={questionAnswered(index)}
+                  disabled={questionAnswered(index) || revealSolutions}
                   className={twMerge(
                     'flex-grow text-left cursor-pointer',
                     getOptionClassName(index, i, q.answerArrPosition)
@@ -102,9 +106,10 @@ const Exam = ({
                 </UnstyledButton>
               ))}
             </div>
-            {questionAnswered(index) && (
+            {questionAnswered(index) && !revealSolutions && (
               <div className="absolute bottom-0 right-0 p-2">
                 {questionIsCorrect(index) && <IconCheck color="green" />}
+                {/* {!questionIsCorrect(index) && <IconX color="red" />} */}
               </div>
             )}
           </CardWrapper>
