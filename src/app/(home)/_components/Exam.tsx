@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { ActionIcon, Tooltip, UnstyledButton } from '@mantine/core';
 import { twMerge } from 'tailwind-merge';
 import { IconRefresh, IconCheck } from '@tabler/icons-react';
@@ -16,6 +16,7 @@ const Exam = ({
   setSelectedAnswers,
   isCompleted,
   setIsCompleted,
+  handleReset,
 }: {
   exam: Question[];
   isLoading: boolean;
@@ -25,17 +26,19 @@ const Exam = ({
   setSelectedAnswers: React.Dispatch<React.SetStateAction<(number | null)[]>>;
   isCompleted: boolean;
   setIsCompleted: React.Dispatch<React.SetStateAction<boolean>>;
+  handleReset: () => void;
 }) => {
   const handleAnswerClick = (questionIndex: number, answerIndex: number) => {
-    if (selectedAnswers[questionIndex] === null) {
-      const newSelectedAnswers = [...selectedAnswers];
-      newSelectedAnswers[questionIndex] = answerIndex;
-      setSelectedAnswers(newSelectedAnswers);
+    console.log(`Question: ${questionIndex}, Answer: ${answerIndex}`);
+    const newSelectedAnswers = [...selectedAnswers];
+    newSelectedAnswers[questionIndex] = answerIndex;
+    setSelectedAnswers(newSelectedAnswers);
 
-      if (newSelectedAnswers.every((answer) => answer !== null)) {
-        setIsCompleted(true);
-      }
-    }
+    const allAnswered = newSelectedAnswers.every((answer) => answer !== null);
+    const allCorrect = newSelectedAnswers.every(
+      (answer, index) => answer === exam[index].answerArrPosition
+    );
+    setIsCompleted(allAnswered && allCorrect);
   };
 
   const calculateGrade = () => {
@@ -46,12 +49,11 @@ const Exam = ({
     return ((correctAnswers.length / exam.length) * 100).toFixed(2);
   };
 
-  const handleReset = () => {
-    setSelectedAnswers(Array(exam?.length).fill(null));
-    setIsCompleted(false);
+  const questionAnswered = (index: number) => {
+    console.log(`Question ${index} answered:`, selectedAnswers[index] !== null);
+    return selectedAnswers[index] !== null;
   };
 
-  const questionAnswered = (index: number) => selectedAnswers[index] !== null;
   const questionIsCorrect = (index: number) =>
     selectedAnswers[index] === exam[index].answerArrPosition;
 
@@ -59,6 +61,9 @@ const Exam = ({
     if (!questionAnswered(index)) return 'cursor-pointer';
     if (selectedAnswers[index] === i) {
       return questionIsCorrect(index) ? 'text-green-600' : 'text-red-600 dark:text-red-400';
+    }
+    if (revealSolutions && correctIndex === i) {
+      return 'font-bold text-green-600';
     }
     return 'text-zinc-700 dark:text-zinc-300';
   };
@@ -82,29 +87,21 @@ const Exam = ({
               <h3 className="font-bold mb-2">{q.question}</h3>
             </div>
 
-            <ul className="list-none pl-6">
+            <div className="flex flex-col space-y-1 pl-6">
               {q.options.map((option, i) => (
-                <li
+                <UnstyledButton
                   key={i}
-                  className={`${getOptionClassName(index, i, q.answerArrPosition)} flex items-center`}
+                  onClick={() => handleAnswerClick(index, i)}
+                  disabled={questionAnswered(index)}
+                  className={twMerge(
+                    'flex-grow text-left cursor-pointer',
+                    getOptionClassName(index, i, q.answerArrPosition)
+                  )}
                 >
-                  <UnstyledButton
-                    disabled={questionAnswered(index)}
-                    onClick={() => handleAnswerClick(index, i)}
-                    className={twMerge(
-                      'flex-grow',
-                      questionAnswered(index) &&
-                        !questionIsCorrect(index) &&
-                        q.answerArrPosition === i &&
-                        'underline',
-                      `${revealSolutions && q.answerArrPosition === i ? 'font-bold text-green-600' : ''}`
-                    )}
-                  >
-                    {option}
-                  </UnstyledButton>
-                </li>
+                  {option}
+                </UnstyledButton>
               ))}
-            </ul>
+            </div>
             {questionAnswered(index) && (
               <div className="absolute bottom-0 right-0 p-2">
                 {questionIsCorrect(index) && <IconCheck color="green" />}
@@ -116,8 +113,8 @@ const Exam = ({
       {isCompleted && (
         <div className="mt-4 flex justify-center items-center">
           <h2 className="font-bold mr-4">Your Grade: {calculateGrade()}%</h2>
-          <Tooltip label="Reset" position="top" c="white" bg="gray">
-            <ActionIcon onClick={handleReset} variant="light" c="gray">
+          <Tooltip label="Reset" position="top" color="white" bg="gray">
+            <ActionIcon onClick={handleReset} variant="light" color="gray">
               <IconRefresh />
             </ActionIcon>
           </Tooltip>

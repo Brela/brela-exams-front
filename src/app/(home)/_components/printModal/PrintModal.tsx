@@ -33,10 +33,10 @@ const PrintModal: FC<PrintModalProps> = ({ isOpen, onClose, questions }) => {
       <Box className="questions">
         {questions.map((question, index) => (
           <div key={index} className="question pb-5">
-            <p>{question.question}</p>
+            <div>{question.question}</div>
             <div className="options">
               {question.options.map((option, i) => (
-                <p key={i}>{option}</p>
+                <div key={i}>{option}</div>
               ))}
             </div>
           </div>
@@ -47,9 +47,9 @@ const PrintModal: FC<PrintModalProps> = ({ isOpen, onClose, questions }) => {
         <h2>Answer Key</h2>
         {questions.map((question, index) => (
           <div key={index} className="answer">
-            <p>
+            <div>
               <strong>Question {index + 1}:</strong> {question.answer}
-            </p>
+            </div>
           </div>
         ))}
       </Box>

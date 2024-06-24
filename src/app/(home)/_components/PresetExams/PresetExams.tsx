@@ -150,7 +150,7 @@ const PresetCard = ({
       className="w-12 h-12 object-cover rounded-full mb-2"
     />
     <Box className="flex flex-col items-center">
-      <Text size="md" c="dimmed" mt={8}>
+      <div className="mt-4">
         <Tooltip
           color="gray"
           label={<span className="font-semibold">Prompt: {pExam.prompt} </span>}
@@ -158,7 +158,7 @@ const PresetCard = ({
         >
           <Text>{startCase(pExam.title)}</Text>
         </Tooltip>
-      </Text>
+      </div>
       {/* <Badge color={tagColors[pExam.tag]}>{startCase(pExam.tag)}</Badge> */}
     </Box>
   </div>
